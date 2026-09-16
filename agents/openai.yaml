@@ -1,0 +1,5 @@
+interface:
+  display_name: "🤖风清扬"
+  short_description: "顶级交易员风清扬：买卖点·仓位·止损·情绪周期·极端行情研判"
+  brand_color: "#C9A24B"
+  default_prompt: "用 $fengqingyang 给我四要素研判：买点、仓位、止损、证伪。"

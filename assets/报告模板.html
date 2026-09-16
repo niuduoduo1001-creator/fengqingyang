@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--
+  风清扬 · 研判报告模板 v2（深色多彩 · 内联SVG · 零外链零依赖）
+  用法：复制本文件 → 全文替换所有"双花括号"占位符 → 浏览器打开交付。
+
+  【必改项 · 三处"当前"标记】忘改会与结论打架：
+   ① 逻辑分波阶梯：把 lvHi 的 x/width/height 移到当前级别——
+      L1 x=30 y=130 h=34 ｜ L2 x=165 y=104 h=60 ｜ L3 x=300 y=78 h=86 ｜ L4 x=435 y=52 h=112 ｜ L5 x=570 y=26 h=138（width 均为120）
+   ② 趋势图：把 segDot 圆心与 segTag 文本移到当前段——段1 x=95 ｜ 段2 x=225 ｜ 段3 x=355 ｜ 段4 x=485 ｜ 段5 x=615（y 对齐曲线）
+   ③ 情绪周期条：给当前阶段矩形加 stroke="#c9a24b" stroke-width="2"（mood1 冰点 / mood2 混沌 / mood3 启动 / mood4 主升 / mood5 高潮 / mood6 分歧 / mood7 退潮）
+
+  其他规则：红涨绿跌（涨/多头=红，跌/空头=绿）；表格颜色 class 按实际方向填（up=红，down=绿，中性=num）；
+           所有数据标来源与时点；四要素（买点/仓位/止损/证伪）缺一不可；结尾保留纪律提醒与免责声明。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{标题}}</title>
+<style>
+  :root{
+    --bg:#0b0f17; --card:#121826; --card2:#0f1522; --line:#232c3d;
+    --txt:#e6e9ef; --muted:#9aa4b2; --gold:#c9a24b;
+    --up:#ff4d4f; --down:#22c55e; --warn:#f59e0b; --info:#38bdf8; --purple:#a78bfa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    line-height:1.7;padding:32px 16px}
+  .page{max-width:980px;margin:0 auto}
+  .hero{background:linear-gradient(135deg,#141b2c 0%,#0e1420 60%,#1a1408 100%);
+    border:1px solid var(--line);border-radius:16px;padding:28px 30px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;
+    background:radial-gradient(circle,rgba(201,162,75,.22),transparent 70%)}
+  .hero-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .badge{color:var(--gold);border:1px solid rgba(201,162,75,.45);border-radius:999px;
+    padding:2px 12px;font-size:13px;letter-spacing:.06em}
+  .date{color:var(--muted);font-size:13px}
+  h1{font-size:30px;letter-spacing:.02em}
+  .subtitle{color:var(--muted);margin-top:8px;font-size:14px}
+  .chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .chip{background:#0d1320;border:1px solid var(--line);border-radius:10px;
+    padding:6px 12px;font-size:13px;color:var(--txt)}
+  .chip b{color:var(--gold);font-weight:600}
+  section{margin-top:20px}
+  .verdict{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+  @media(max-width:760px){.verdict{grid-template-columns:1fr}}
+  .verdict>div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .verdict-main{border-left:4px solid var(--gold)}
+  .verdict-action{border-left:4px solid var(--up)}
+  .label{display:block;font-size:12px;color:var(--muted);letter-spacing:.18em;margin-bottom:6px}
+  .verdict p{font-size:16px}
+  .verdict-action p{color:var(--up);font-weight:600}
+
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid4{grid-template-columns:1fr}}
+  .card4{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .card4 h3{font-size:14px;color:var(--gold);letter-spacing:.08em;margin-bottom:10px}
+  .card4 h3 span{color:var(--muted);font-weight:400;font-size:12px;margin-left:6px}
+  .card4 p{font-size:14px;color:var(--txt)}
+  .card4 .sub{color:var(--muted);font-size:12.5px;margin-top:8px}
+  .tag{display:inline-block;font-size:12px;border-radius:6px;padding:1px 8px;margin-top:10px}
+  .tag.red{color:var(--up);background:rgba(255,77,79,.12);border:1px solid rgba(255,77,79,.35)}
+  .tag.green{color:var(--down);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35)}
+  .tag.gold{color:var(--gold);background:rgba(201,162,75,.12);border:1px solid rgba(201,162,75,.35)}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .panel h2{font-size:16px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+  .panel h2::before{content:"";width:8px;height:8px;background:var(--gold);border-radius:2px;transform:rotate(45deg)}
+  .panel .note{color:var(--muted);font-size:12.5px;margin-top:10px}
+  svg{width:100%;height:auto;display:block}
+
+  .tablewrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:14px;min-width:600px}
+  th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:500;font-size:12.5px;letter-spacing:.06em}
+  td.up{color:var(--up)} td.down{color:var(--down)} td.num{font-variant-numeric:tabular-nums}
+  @media(max-width:560px){table{min-width:520px} th,td{padding:8px;font-size:13px}}
+
+  .risk ul{list-style:none}
+  .risk li{padding:8px 0 8px 24px;position:relative;border-bottom:1px dashed var(--line);font-size:14px}
+  .risk li:last-child{border-bottom:none}
+  .risk li::before{content:"▸";position:absolute;left:6px;color:var(--warn)}
+
+  footer{margin-top:26px;border-top:1px solid var(--line);padding-top:16px;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12.5px}
+  footer b{color:var(--gold)}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <header class="hero">
+    <div class="hero-top">
+      <span class="badge">风清扬 · 顶级交易员</span>
+      <span class="date">数据截至 {{数据时点}} · 来源：{{数据来源}}</span>
+    </div>
+    <h1>{{标题}}</h1>
+    <p class="subtitle">{{副标题}}</p>
+    <div class="chips">
+      <span class="chip">情绪阶段 <b>{{情绪阶段}}</b></span>
+      <span class="chip">段数 <b>{{段数}}段</b></span>
+      <span class="chip">逻辑层级 <b>L{{逻辑层级}}</b></span>
+      <span class="chip">总仓位上限 <b>{{总仓位上限}}</b></span>
+    </div>
+  </header>
+
+  <section class="verdict">
+    <div class="verdict-main">
+      <span class="label">结 论</span>
+      <p>{{一句话结论}}</p>
+    </div>
+    <div class="verdict-action">
+      <span class="label">动 作</span>
+      <p>{{下一交易日动作}}</p>
+    </div>
+  </section>
+
+  <section class="grid4">
+    <div class="card4">
+      <h3>买点 <span>四类之一</span></h3>
+      <p>{{买点类型}}</p>
+      <p class="sub">触发：{{买点触发}}</p>
+      <span class="tag gold">同题材·同身位·第一只</span>
+    </div>
+    <div class="card4">
+      <h3>仓位 <span>半凯利×分档，取更严</span></h3>
+      <p>{{仓位结论}}</p>
+      <p class="sub">E={{E值}}；f={{凯利f}} → 半凯利={{半凯利f}}；上限：{{仓位档说明}}</p>
+      <span class="tag gold">单票 · 板块均设上限，取更严者</span>
+    </div>
+    <div class="card4">
+      <h3>止损 <span>买入前设定</span></h3>
+      <p>{{止损位}}</p>
+      <p class="sub">{{止损说明}}</p>
+      <span class="tag red">破位不收回=执行，不谈判</span>
+    </div>
+    <div class="card4">
+      <h3>证伪 <span>什么情况下逻辑错了</span></h3>
+      <p>{{证伪条件}}</p>
+      <p class="sub">复核时点：{{复核时点}}</p>
+      <span class="tag green">证伪即离场，不找理由</span>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>逻辑分波阶梯（L1→L5）</h2>
+    <svg viewBox="0 0 720 190" role="img" aria-label="逻辑分波阶梯示意">
+      <defs>
+        <linearGradient id="lvOn" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" stop-color="#c9a24b" stop-opacity=".12"/>
+          <stop offset="1" stop-color="#c9a24b" stop-opacity=".58"/>
+        </linearGradient>
+      </defs>
+      <!-- 阶梯（固定五级；当前级高亮由下方 lvHi 控制） -->
+      <g>
+        <rect id="lv1" x="30"  y="130" width="120" height="34"  rx="6" fill="#1a2334" stroke="#2a3550"/>
+        <rect id="lv2" x="165" y="104" width="120" height="60"  rx="6" fill="#1a2334" stroke="#2a3550"/>
+        <rect id="lv3" x="300" y="78"  width="120" height="86"  rx="6" fill="#1a2334" stroke="#2a3550"/>
+        <rect id="lv4" x="435" y="52"  width="120" height="112" rx="6" fill="#1a2334" stroke="#2a3550"/>
+        <rect id="lv5" x="570" y="26"  width="120" height="138" rx="6" fill="#1a2334" stroke="#2a3550"/>
+      </g>
+      <!-- 当前级高亮：默认 L4；改 x/y/height 到实际级别（x=30/165/300/435/570） -->
+      <rect id="lvHi" x="435" y="52" width="120" height="112" rx="6"
+            fill="url(#lvOn)" stroke="#c9a24b" stroke-width="1.5"/>
+      <g fill="#9aa4b2" font-size="12.5" text-anchor="middle" font-family="inherit">
+        <text x="90"  y="152">L1 预期</text>
+        <text x="225" y="140">L2 兑现</text>
+        <text x="360" y="126">L3 绑定</text>
+        <text x="495" y="114">L4 加速</text>
+        <text x="630" y="100">L5 龙头</text>
+      </g>
+      <g fill="#6b7686" font-size="11" text-anchor="middle" font-family="inherit">
+        <text x="90"  y="168">纯叙事</text>
+        <text x="225" y="156">涨价/订单</text>
+        <text x="360" y="142">赛道 β</text>
+        <text x="495" y="130">量价齐升</text>
+        <text x="630" y="116">抱团溢价</text>
+      </g>
+      <text x="30" y="20" fill="#c9a24b" font-size="12.5" font-family="inherit">当前：L{{逻辑层级}}</text>
+    </svg>
+    <p class="note">阶梯定律：逻辑停在哪级，股价停在哪波。辨硬软："下一波还能讲什么新逻辑？"答不出=断档。当前级别判定：{{当前逻辑层级}}。</p>
+  </section>
+
+  <section class="panel">
+    <h2>趋势坐标：段数 × MA20</h2>
+    <svg viewBox="0 0 720 220" role="img" aria-label="段数与MA20示意">
+      <defs>
+        <linearGradient id="area" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff4d4f" stop-opacity=".28"/>
+          <stop offset="1" stop-color="#ff4d4f" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <g stroke="#1d2536" stroke-width="1">
+        <line x1="30" y1="40"  x2="690" y2="40"/>
+        <line x1="30" y1="90"  x2="690" y2="90"/>
+        <line x1="30" y1="140" x2="690" y2="140"/>
+        <line x1="30" y1="190" x2="690" y2="190"/>
+      </g>
+      <path d="M30 178 L95 160 L160 168 L225 128 L290 150 L355 112 L420 132 L485 92 L550 118 L615 76 L690 96"
+            fill="none" stroke="#ff4d4f" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="M30 178 L95 160 L160 168 L225 128 L290 150 L355 112 L420 132 L485 92 L550 118 L615 76 L690 96 L690 200 L30 200 Z"
+            fill="url(#area)" stroke="none"/>
+      <path d="M30 170 C140 164 240 150 340 134 C440 118 560 108 690 100"
+            fill="none" stroke="#c9a24b" stroke-width="2.2" stroke-dasharray="7 5"/>
+      <g fill="#9aa4b2" font-size="12" text-anchor="middle" font-family="inherit">
+        <text x="95"  y="40">段1</text>
+        <text x="225" y="40">段2</text>
+        <text x="355" y="40">段3</text>
+        <text x="485" y="40">段4</text>
+        <text x="615" y="40">段5+</text>
+      </g>
+      <g stroke="#2a3550" stroke-width="1" stroke-dasharray="3 4">
+        <line x1="160" y1="48" x2="160" y2="190"/>
+        <line x1="290" y1="48" x2="290" y2="190"/>
+        <line x1="420" y1="48" x2="420" y2="190"/>
+        <line x1="550" y1="48" x2="550" y2="190"/>
+      </g>
+      <!-- 当前段标记：圆点移到实际段位（x=95/225/355/485/615，y 对齐曲线） -->
+      <circle id="segDot" cx="485" cy="92" r="5" fill="#c9a24b"/>
+      <text id="segTag" x="500" y="70" fill="#c9a24b" font-size="12.5" font-family="inherit">{{当前段数标记}}</text>
+      <text x="690" y="212" fill="#6b7686" font-size="11" text-anchor="end" font-family="inherit">MA20=生命线（金色虚线）· 段5后只减不加</text>
+    </svg>
+    <!-- 填表时：segDot 圆点与 segTag 文本必须指到结论对应的段位与价位。 -->
+    <p class="note">段数结论：{{段数结论}}</p>
+  </section>
+
+  <section class="panel">
+    <h2>情绪周期定位</h2>
+    <svg viewBox="0 0 720 96" role="img" aria-label="情绪周期七阶段">
+      <g>
+        <rect id="mood1" x="20"  y="30" width="94" height="30" rx="6" fill="#15304a" stroke="#2b5a86"/>
+        <rect id="mood2" x="120" y="30" width="94" height="30" rx="6" fill="#1b2a3d" stroke="#3b4a63"/>
+        <rect id="mood3" x="220" y="30" width="94" height="30" rx="6" fill="#144f47" stroke="#1f6f61"/>
+        <rect id="mood4" x="320" y="30" width="94" height="30" rx="6" fill="#6e1b20" stroke="#ff4d4f"/>
+        <rect id="mood5" x="420" y="30" width="94" height="30" rx="6" fill="#6b3f10" stroke="#f59e0b"/>
+        <rect id="mood6" x="520" y="30" width="94" height="30" rx="6" fill="#3a3320" stroke="#a8894a"/>
+        <rect id="mood7" x="620" y="30" width="80" height="30" rx="6" fill="#262b33" stroke="#4b5563"/>
+      </g>
+      <text x="360" y="18" fill="#c9a24b" font-size="12" text-anchor="middle" font-family="inherit">{{当前阶段标注}}</text>
+      <g fill="#d7dde6" font-size="12.5" text-anchor="middle" font-family="inherit">
+        <text x="67"  y="50">冰点</text>
+        <text x="167" y="50">混沌</text>
+        <text x="267" y="50">启动</text>
+        <text x="367" y="50">主升</text>
+        <text x="467" y="50">高潮</text>
+        <text x="567" y="50">分歧</text>
+        <text x="660" y="50">退潮</text>
+      </g>
+      <g fill="#6b7686" font-size="11" text-anchor="middle" font-family="inherit">
+        <text x="67"  y="78">0-1成</text>
+        <text x="167" y="78">0-1成</text>
+        <text x="267" y="78">2-4成</text>
+        <text x="367" y="78">6-8成</text>
+        <text x="467" y="78">5-7成</text>
+        <text x="567" y="78">3-5成</text>
+        <text x="660" y="78">空仓</text>
+      </g>
+    </svg>
+    <p class="note">总仓位取更严者：情绪阶段刻度 ∩ 赚钱效应上沿封顶。市场越冷，上沿越低——具体分档属完整版规则。</p>
+  </section>
+
+  <section class="panel">
+    <h2>关键数据（须标注来源与时点）</h2>
+    <div class="tablewrap">
+      <!-- 颜色：涨/多头用 class="up num"，跌/空头用 class="down num"，中性用 class="num"；按实际数据方向填。 -->
+      <table>
+        <thead><tr><th>指标</th><th>数值</th><th>口径/来源</th></tr></thead>
+        <tbody>
+          <tr><td>现价 / 区间涨跌</td><td class="up num">{{现价与涨跌}}</td><td>{{现价来源}}</td></tr>
+          <tr><td>段数定位</td><td class="num">{{段数}}</td><td>段数定位法</td></tr>
+          <tr><td>MA20 距离</td><td class="num">{{MA20距离}}</td><td>日线</td></tr>
+          <tr><td>成交 / 换手</td><td class="num">{{成交与换手}}</td><td>{{成交来源}}</td></tr>
+          <tr><td>赚钱效应（涨占比）</td><td class="down num">{{涨占比}}</td><td>{{涨占比口径}}</td></tr>
+          <tr><td>融资余额方向</td><td class="num">{{融资方向}}</td><td>{{融资来源}}</td></tr>
+          <tr><td>逻辑层级</td><td class="num">L{{逻辑层级}}</td><td>逻辑分波催化论</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">红=涨/多头信号，绿=跌/空头信号（A股惯例）。查不到的数据写"待验证"，不估算。</p>
+  </section>
+
+  <section class="panel risk">
+    <h2>风险与观察清单</h2>
+    <ul>
+      <li>{{风险一}}</li>
+      <li>{{风险二}}</li>
+      <li>{{风险三}}</li>
+      <li>{{观察项}}</li>
+    </ul>
+  </section>
+
+  <footer>
+    <span><b>风清扬</b> · 决策系统输出 · 仅供参考、非投资建议</span>
+    <span>纪律提醒：{{纪律提醒}}</span>
+  </footer>
+
+</main>
+</body>
+</html>
